@@ -160,3 +160,6 @@ tree_sum_b3 = BinTree(8,
         BinTree(1, None, None)
     )
 )
+tree_fig10=BinTree(8,BinTree(6,None,None),BinTree(2,None,None))
+tree_fig11=BinTree(8,BinTree(6,BinTree(5, None, None),None),BinTree(2,BinTree(1,None,None),BinTree(1,None,None)))
+tree_fig12=BinTree(8,BinTree(6,BinTree(5, None, None),BinTree(3,None,None)),BinTree(2,BinTree(1,None,None),BinTree(1,None,None)))

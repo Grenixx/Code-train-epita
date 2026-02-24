@@ -11,7 +11,7 @@ class BinTree:
 
     """
 
-    def __init__(self, key, left, right):
+    def __init__(self, key, left, right, size=None):
         """Init binary tree.
 
         Args:
@@ -24,3 +24,4 @@ class BinTree:
         self.key = key
         self.left = left
         self.right = right
+        self.size = size
