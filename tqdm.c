@@ -10,10 +10,12 @@ void progress_bar(long long current, long long total)
         start = time(NULL);
     }
     time_t currtime = time(NULL);
-    unsigned long secondPastsinceStart = (unsigned long) difftime(current, start);
+    unsigned long secondPastsinceStart = (unsigned long) difftime(currtime, start);
     
     static int last_percent = -1;
-    int percent = (int)((current * 100) / total);
+    // vu que l on est souvent dans des for on i<total donc on fini a total-1
+    //int percent = (int)((current * 100) / total);
+    int percent = (int)(((current+1) * 100) / total);
     if (current >= total)
         percent = 100;
     if (percent == last_percent)
@@ -21,7 +23,7 @@ void progress_bar(long long current, long long total)
     last_percent = percent;
 
     int width = 30;
-    int filled = (int)((current * width) / total);
+    int filled = (int)(((current+1) * width) / total);
 
     printf("\r[");
     for (int i = 0; i < width; i++)
