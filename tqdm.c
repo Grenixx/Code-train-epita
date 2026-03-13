@@ -25,16 +25,35 @@ void progress_bar(long long current, long long total)
     int width = 30;
     int filled = (int)(((current+1) * width) / total);
 
-    printf("\r[");
+    printf("\r|");
     for (int i = 0; i < width; i++)
-        printf(i < filled ? "O" : "-");
-    printf("] %3d%% %lu", percent, secondPastsinceStart);
+       // printf(i < filled ? "█" : "░");
+       if (i < filled){
+            printf("█");
+       }else if (i < width*(1/3)){
+            printf("▓");
+       }else if (i < (width)*2/3){
+            printf("▒");
+       }
+       else if (i < width){
+            printf("░");
+       }
+
+    printf("| %3d%% %lu", percent, secondPastsinceStart);
     fflush(stdout);
 }
 
+/*
+█
+▓
+▒
+░
+*/
+#include <windows.h>
 int main(){
-    for (int i = 0; i<100000; i++){
-        progress_bar(i,100000);
+    SetConsoleOutputCP(CP_UTF8);
+    for (int i = 0; i<100000000; i++){
+        progress_bar(i,100000000);
     }
 }
 
