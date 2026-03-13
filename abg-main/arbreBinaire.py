@@ -282,8 +282,6 @@ def get_kinship(B : bintree.BinTree, x, y):
         #start the relative search with the first found
         result = rec_kinship(B,x, 0)
         return result
-    
-    
     elif B.left != None:
         return get_kinship(B.left, x,y)
     
@@ -310,7 +308,7 @@ def rec_kinship(B,s, i):
     
 #print(get_kinship(bintrees_examples.tree_b, 0,7))
 
-print(kinship(bintrees_examples.tree_fig2, 'Q', 'U')) # == 1
+#print(kinship(bintrees_examples.tree_fig2, 'Q', 'U')) # == 1
 #print(get_kinship(bintrees_examples.tree_fig2, 'D', 'T')) # == 2
 #print(get_kinship(bintrees_examples.tree_fig2, 'T', 'V')) # == 3
 #print(get_kinship(bintrees_examples.tree_fig2, 'S', 'R')) # == -1
@@ -343,3 +341,113 @@ def check_sum(BT) -> bool:
 #BF(bintrees_examples.tree_fig11)
 #print()
 #print("  "  , check_sum(bintrees_examples.tree_fig11))
+
+def get_node(B, lvl, n): # traverse gauche puis BFS
+    if (B == None):
+        return None
+    if (lvl == 0):
+        return B.key
+    currlvl = 0
+    q1 = queue.Queue()
+    q2 = queue.Queue()
+    q1.enqueue(B)
+    while (currlvl != lvl and not q1.isempty()):
+
+        curr = q1.dequeue()
+        if (curr.left != None):
+            q2.enqueue(curr.left)
+        if (curr.right != None):
+            q2.enqueue(curr.right)
+        
+        if (q1.isempty()):
+                currlvl+=1
+                tmp = q1
+                q1 = q2
+                q2 = tmp
+    
+    count = 0
+    while(count!=n and not q1.isempty()):
+        q1.dequeue()
+        count+=1
+    #print(count)
+        
+    if (not q1.isempty()):
+        return q1.dequeue().key
+    else:
+        return None
+    
+#print(get_node(bintrees_examples.tree_fig12, 0, 1))
+
+def search_nth_pre(tree, n):
+    if tree == None or n<0:
+        return None
+    else:
+        res , n  = rec_search(tree, n)
+        return res
+    
+def rec_search(tree, n):
+    if tree != None:
+        if n == 1:
+            return tree.key, 0
+        else:
+            res, n = rec_search(tree.left, n-1)
+            if n != 0:
+                res, n = rec_search(tree.right, n)
+            return res, n
+    else:
+        return None, n
+            
+            
+        
+
+#print(search_nth_pre(bintrees_examples.tree_fig12, 1))
+
+
+def list_sum_limit(B,limit):
+    l = []
+    if B == None:
+        return l
+    q1 = queue.Queue()
+    q2 = queue.Queue()
+    q1.enqueue(B)
+    sum = 0
+    while(not q1.isempty()):
+        curr = q1.dequeue()
+        sum += curr.key
+        if curr.left != None:
+            q2.enqueue(curr.left)
+        if curr.right != None:
+            q2.enqueue(curr.right)
+
+        if q1.isempty():
+            if sum < limit:
+                l.append(sum)
+            q1 = q2
+            q2 = queue.Queue()
+            sum = 0
+
+    return l
+#tree_figB5= bintree.BinTree(8,bintree.BinTree(6,bintree.BinTree(5,None,None),None),bintree.BinTree(2,bintree.BinTree(1,None,None),bintree.BinTree(4,None,bintree.BinTree(7,None,None))))
+#print(list_sum_limit(tree_figB5,10))
+
+def get_first_single(B):
+    res = -1
+    if B.left == None:
+        if B.right == None:
+            pass
+        else:
+            res = B.key
+    else:
+        if B.right == None:
+            res = B.key
+        else:
+            res = get_first_single(B.left)
+            if res != -1:
+                return res
+            else:
+                return get_first_single(B.right)
+    return res
+        
+        
+tree_figB5= bintree.BinTree(8,bintree.BinTree(6,bintree.BinTree(5,None,None),bintree.BinTree(5,None,None)),bintree.BinTree(2,bintree.BinTree(1,None,None),bintree.BinTree(4,None,bintree.BinTree(7,None,None))))
+print(get_first_single(tree_figB5))
