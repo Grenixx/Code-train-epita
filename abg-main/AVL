@@ -1,0 +1,38 @@
+from algo_py import bintree
+from algo_py import queue
+from algo_py import timing
+
+
+class AVL(bintree.BinTree):
+    def __init__(self, key, left, right, bal):
+        super().__init__(key, left, right)
+        self.bal = bal
+
+def is_equilibrer(B):
+    if B.left != None:
+        if  B.right != None:
+            return is_equilibrer(B.left) and is_equilibrer(B.right)
+        else: 
+            pass
+
+def rec_copy_w_bal(B):
+    if B != None:
+        l, l_h = copy_w_bal(B.left)
+        r, r_h = copy_w_bal(B.right)
+
+        bal = l_h - r_h
+        tree = AVL(B.key, l, r, bal)
+        h = max(l_h, r_h) +1
+    else:
+        tree = None
+        h = -1
+    return tree, h
+
+def copy_w_bal(B):
+    tree, _ = copy_w_bal(B)
+    return tree
+        
+
+
+the_bst_to_avl = bintree.BinTree(50, None, None)
+tree = AVL(50 ,None,None, 0)

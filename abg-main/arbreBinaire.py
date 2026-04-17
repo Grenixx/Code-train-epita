@@ -28,11 +28,7 @@ def BF(bintree):
 #timing.timing(BF(bintrees_examples.tree_fig1))
 #BF(bintrees_examples.tree_fig1)
 
-def size(bintree):
-    if (bintree == None):
-        return 0
-    else:
-        return 1 + size(bintree.left) + size(bintree.right)
+
     
 def height(bintree):
     if (bintree == None):
